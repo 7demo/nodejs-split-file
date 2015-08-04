@@ -1,24 +1,11 @@
-var fs = require('fs');
-var readstream = fs.createReadStream('source.js');
-var through = require('through');
+var uglify = require('uglify-js');
 
-var size = 0;
-var dest = null;
-var file = 0;
+var total = 36;
 
-readstream.setEncoding('utf-8');
-
-readstream.on('data', function (chunk) {
-	size += chunk.length / 1000;
-	if (size > 500) {
-		dest.pause();
-		dest = null;
-		size = 0;
-		file ++;
-	}
-	if (!dest) {
-		dest = through();
-		dest.pipe(fs.createWriteStream('aim/aim' + file +'.js'));
-	}
-	dest.queue(chunk);
-});
+// for (var i = 0; i < total; i++) {
+// 	uglify.minify('aim/aim'+ i +'.js');
+// }
+// uglify.minify([ "aim/aim0.js", "aim/aim1.js", "aim/aim2.js" ], {
+//     outSourceMap: "out.js.map"
+// });
+uglify.minify('test.js');

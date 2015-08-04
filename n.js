@@ -1,5 +1,5 @@
 var fs = require('fs');
-var readstream = fs.createReadStream('source.js');
+var readstream = fs.createReadStream('test.js');
 var through = require('through');
 
 var size = 0;
@@ -10,7 +10,8 @@ readstream.setEncoding('utf-8');
 
 readstream.on('data', function (chunk) {
 	size += chunk.length / 1000;
-	if (size > 500) {
+	console.log(size);
+	if (size > 100) {
 		dest.pause();
 		dest = null;
 		size = 0;
@@ -24,3 +25,6 @@ readstream.on('data', function (chunk) {
 }).on('end', function () {
 	// dest.emit('end');
 })
+
+
+//http://stackoverflow.com/questions/21761886/node-js-splitting-a-readable-stream-pipe-to-multiple-sequential-writable-stream
